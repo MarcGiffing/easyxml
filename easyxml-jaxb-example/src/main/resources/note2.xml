@@ -1,0 +1,10 @@
+<notes>
+	<note type="a">
+		<id>1</id>
+		<content>my content</content>
+	</note>
+	<note type="b">
+		<id>2</id>
+		<content>my second content</content>
+	</note>
+</notes>

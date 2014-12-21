@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<notes>
+	<header>
+		<important_content>
+			<whoohoo>xxx</whoohoo>
+		</important_content>
+	</header>
+	<invalid_note>
+		<id>0</id>
+		<content>invalid content</content>
+	</invalid_note>
+	<note type="a">
+		<id>1</id>
+		<content>first content</content>
+	</note>
+	<specialNote>
+		<id>99</id>
+		<specialContent>special</specialContent>
+	</specialNote>
+	<note type="b">
+		<id>2</id>
+		<content>second content</content>
+	</note>
+	<note type="b">
+		<id>2</id>
+		<content>second content</content>
+	</note>
+	<note type="c">
+		<id>2</id>
+		<content>second content</content>
+	</note>
+</notes>

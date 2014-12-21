@@ -1,0 +1,174 @@
+= EASYXML
+
+Easyxml an approach for handling large XML files with low memory footprint. The idea is to use
+the StAX reader and convert only a specific XML nodes to JDom2 or JAXB (at the moment). With this combination
+you get a very low memory footprint with the luxury of using high level XML parser.
+
+The project requires Java 8.
+
+NOTE: The project is still heavily under development. It would be nice if you have some tips to improve
+the API.
+
+== Example XML
+
+For the next description of parsing XML files we are using the following XML as an basis for the further examples. 
+
+[source,xml]
+---------------------------------------------------------------------
+<notes>
+	<note type="simple">
+		<id>1</note>
+		<content>first note</content>
+	</note>
+	<note type="simple">
+		<id>2</note>
+		<content>second note</content>
+	</note>
+	...
+	<note type="simple">
+		<id>10000</note>
+		<content>xth note</content>
+	</note>
+</notes>
+---------------------------------------------------------------------
+
+== JDom2
+
+The first example shows the handling of XML files with JDOM2.
+
+[source,java]
+---------------------------------------------------------------------
+public class Note {
+	private Long id;
+	private String content;
+}
+---------------------------------------------------------------------
+
+
+[source,java]
+---------------------------------------------------------------------
+
+try(InputStream inputStream = new FileInputStream(new File("note.xml"))){
+
+Parser<Element, Note> parser = JDom2ReaderBuilder
+	.<Note> reader()
+	.setInputStream(inputStream)
+	.addItemReader(
+		JDom2ItemReaderBuilder
+			.<Note> itemReader()
+			.shouldHandle("notes/note")
+			.withFunction((e) -> {
+				Note note = new Note();
+				note.setId(Long.valueOf(e.getChildTextTrim("id")));
+				note.setContent(e.getChildTextTrim("content"));
+				return note;
+			}).build()
+	 )
+	.build();
+
+	for (Note note : parser) {
+		System.out.println(note);
+	}
+}
+}
+---------------------------------------------------------------------
+
+The noticeable parts will we explained in the folowing
+
+The *shouldHandle* method will be called for each XML start element which is found in the document while parsing it with StAX.
+With the shouldHandle method you can consume the StAX stream to convert it to an JDom2 element. The *shouldHandle* method expects 
+the path in the DOM tree.
+
+[source,java]
+---------------------------------------------------------------------
+.shouldHandle("notes/note")
+---------------------------------------------------------------------
+
+When the path in the *shouldHandle* method matches the current path then the code within the *withFunction* method is called. 
+The *withFunction* function expects an *Java 8 Function<Element,Boolean>*. 
+The current element is automatically converted into an JDom2 element and can be accessed as usual. 
+
+Inside the *withFunction* a new instance of the *Note* class is created and returnd.
+
+[source,java]
+---------------------------------------------------------------------
+  .withFunction((e) -> {
+    Note note = new Note();
+    note.setId(Long.valueOf(e.getChildTextTrim("id")));
+    note.setContent(e.getChildTextTrim("content"));
+    return note;
+  }
+---------------------------------------------------------------------
+
+ 
+[source,java]
+---------------------------------------------------------------------
+for(Note note : parser) {
+	System.out.println(note);
+}
+---------------------------------------------------------------------
+
+== JAXB
+
+The use of JAXB is similar to the JDom2 approach. You have two possibilities to use JAXB 
+
+* via the *ObjectFactory* which is generated from a XSD
+* via a self generated "Note" Class and an *jaxb.index* file.
+
+The *JaxbReaderBuilder* needs the path of the of the *ObjectFactory* or the *jaxb.index* file.
+With the *withJaxbClass*
+
+[source,java]
+---------------------------------------------------------------------
+try (InputStream inputStream = new FileInputStream(new File("note.xml"))) {
+
+Parser<JAXBElement<Note>, Note> parser = JaxbReaderBuilder
+	.<Note> reader(ObjectFactory.class.getPackage().getName())
+	.setInputStream(inputStream)
+	.addItemReader(
+		new JaxbItemReaderBuilder<Note>()
+			.withJaxbClass(Note.class)
+			.shouldHandle("notes/note")
+			.build()
+	)
+	.build();
+
+for (Note note : parser) {
+	System.out.println(note);
+}
+}
+---------------------------------------------------------------------
+
+
+== Update with JDom2
+
+With the help of the Jdom2WriterBuilder you can modify existing XML files without knowing the hole structure
+of the document. The approach is the same as with the JDom2Reader, with you can modify the document within the
+*withFunction* and the changes are automatically written back to the output stream.
+
+[source,java]
+---------------------------------------------------------------------
+try (
+InputStream inputStream = new FileInputStream(new File("note.xml"));
+OutputStream outputStream = new FileOutputStream(new File("note_modified.xml"))) {
+
+Writer writer = Jdom2WriterBuilder.writer()
+	.setInputStream(inputStream)
+	.setOutputStream(outputStream)
+	.addItemWriter(
+		new Jdom2ItemWriterBuilder()
+			.shouldHandle("notes/note")
+			.withFunction((c) -> {
+
+				Element contentElement = c.getElement().getChild("content");
+				contentElement.setText("content: " + contentElement.getText());
+			})
+			.build())
+
+	.build();
+
+writer.writeAll();
+
+}
+---------------------------------------------------------------------
+   
