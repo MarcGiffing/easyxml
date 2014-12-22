@@ -1,1 +1,2 @@
-include:: src/docs/asciidoc/README.adoc[]
+safe: 'server'
+include::src/docs/asciidoc/README.adoc[]
