@@ -1,1 +1,1 @@
-include::src/docs/asciidoc/README.adoc
+include:: src/docs/asciidoc/README.adoc[]
