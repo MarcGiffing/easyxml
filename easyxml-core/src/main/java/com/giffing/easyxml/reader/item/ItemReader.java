@@ -5,7 +5,7 @@ import com.giffing.easyxml.context.ParseContext;
 public interface ItemReader<T, R> {
 
 	/**
-	 * @param transformResult
+	 * @param t transform result
 	 * @return
 	 */
 	R read(T t);
