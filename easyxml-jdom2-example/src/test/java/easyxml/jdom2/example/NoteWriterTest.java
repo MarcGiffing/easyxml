@@ -11,9 +11,9 @@ import javax.xml.stream.XMLStreamException;
 import org.jdom2.Element;
 import org.junit.Test;
 
-import easyxml.jdom2.writer.Jdom2ItemWriterBuilder;
-import easyxml.jdom2.writer.Jdom2WriterBuilder;
-import easyxml.jdom2.writer.Writer;
+import com.giffing.easyxml.jdom2.writer.Jdom2ItemWriterBuilder;
+import com.giffing.easyxml.jdom2.writer.Jdom2WriterBuilder;
+import com.giffing.easyxml.jdom2.writer.Writer;
 
 public class NoteWriterTest {
 

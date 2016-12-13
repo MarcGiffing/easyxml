@@ -10,9 +10,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 
-import easyxml.jaxb.JaxbItemReaderBuilder;
-import easyxml.jaxb.JaxbReaderBuilder;
-import easyxml.reader.Parser;
+import com.giffing.easyxml.jaxb.JaxbItemReaderBuilder;
+import com.giffing.easyxml.jaxb.JaxbReaderBuilder;
+import com.giffing.easyxml.reader.Parser;
+
 import generated.easyxml.example.domain.Note;
 import generated.easyxml.example.domain.ObjectFactory;
 

@@ -11,17 +11,18 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jdom2.Element;
 import org.junit.Test;
 
-import easyxml.context.ParseContext;
-import easyxml.jdom2.example.domain.Note;
-import easyxml.jdom2.reader.JDom2ItemReaderBuilder;
-import easyxml.jdom2.reader.JDom2ReaderBuilder;
-import easyxml.reader.Parser;
-import easyxml.reader.item.ItemReader;
+import com.giffing.easyxml.context.ParseContext;
+import com.giffing.easyxml.jdom2.example.NoteItemReader;
+import com.giffing.easyxml.jdom2.example.domain.Note;
+import com.giffing.easyxml.jdom2.reader.JDom2ItemReaderBuilder;
+import com.giffing.easyxml.jdom2.reader.JDom2ReaderBuilder;
+import com.giffing.easyxml.reader.Parser;
+import com.giffing.easyxml.reader.item.ItemReader;
 
 public class NoteReaderTest {
 
 	public static class NoteContext extends ParseContext {
-		Long latestGroupId;
+		public Long latestGroupId;
 	}
 	
 	@Test

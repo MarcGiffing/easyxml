@@ -10,12 +10,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 
-import easyxml.jaxb.JaxbItemReaderBuilder;
-import easyxml.jaxb.JaxbReaderBuilder;
-import easyxml.jaxb.example.domain.JaxbNote;
-import easyxml.jaxb.example.domain.JaxbSpecialNote;
-import easyxml.jaxb.example.domain.ParseNote;
-import easyxml.reader.Parser;
+import com.giffing.easyxml.jaxb.JaxbItemReaderBuilder;
+import com.giffing.easyxml.jaxb.JaxbReaderBuilder;
+import com.giffing.easyxml.jaxb.example.domain.JaxbNote;
+import com.giffing.easyxml.jaxb.example.domain.JaxbSpecialNote;
+import com.giffing.easyxml.jaxb.example.domain.ParseNote;
+import com.giffing.easyxml.reader.Parser;
 
 public class NoteReaderTest {
 
