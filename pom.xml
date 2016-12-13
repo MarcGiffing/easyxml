@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>easyxml</groupId>
 	<artifactId>easyxml-parent</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -21,7 +21,7 @@
 		<url>https://github.com/MarcGiffing/easyxml/</url>
 		<connection>scm:git:git://github.com/MarcGiffing/easyxml</connection>
 		<developerConnection>scm:git:git@github.com:MarcGiffing/easyxml</developerConnection>
-	  <tag>easyxml-parent-0.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<dependencyManagement>
