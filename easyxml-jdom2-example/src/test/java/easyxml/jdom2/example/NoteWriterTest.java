@@ -29,7 +29,6 @@ public class NoteWriterTest {
 					new Jdom2ItemWriterBuilder()
 						.shouldHandle("notes/note")
 						.withFunction((c) -> {
-
 							Element contentElement = c.getElement().getChild("content");
 							contentElement.setText("content: " + contentElement.getText());
 						})

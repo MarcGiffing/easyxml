@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.stream.XMLStreamReader;
+
 import org.jdom2.Element;
 
 import easyxml.context.ParseContext;
@@ -20,6 +22,8 @@ public class JDom2ReaderBuilder<R> {
 	private Parser<Element, R> parser;
 
 	private List<JDom2Reader<R>> readers = new ArrayList<>();
+	
+	private List<ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
 
 	private JDom2ReaderBuilder() {
 	}
@@ -28,7 +32,7 @@ public class JDom2ReaderBuilder<R> {
 		JDom2ReaderBuilder<R> builder = new JDom2ReaderBuilder<>();
 		builder.reader = new JDom2Reader<R>(new ArrayList<>());
 		builder.readers.add(builder.reader);
-		builder.parser = new Parser<Element, R>(builder.readers, new ParseContext());
+		builder.parser = new Parser<Element, R>(builder.readers, builder.staxItemReaders, new ParseContext());
 		return builder;
 	}
 
@@ -53,6 +57,11 @@ public class JDom2ReaderBuilder<R> {
 
 	public JDom2ReaderBuilder<R> addItemReader(ItemReader<Element, R> itemReader) {
 		this.reader.getItemReaders().add(itemReader);
+		return this;
+	}
+	
+	public JDom2ReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, R> itemReader) {
+		this.staxItemReaders.add(itemReader);
 		return this;
 	}
 

@@ -5,6 +5,8 @@ public class Note {
 	private Long id;
 	
 	private String content;
+	
+	private Long groupId;
 
 	public Long getId() {
 		return id;
@@ -20,6 +22,14 @@ public class Note {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
 	}
 	
 }

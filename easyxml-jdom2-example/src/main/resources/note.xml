@@ -4,24 +4,28 @@
 			<whoohoo>xxx</whoohoo>
 		</important_content>
 	</header>
-	<invalid_note>
-		<id>0</id>
-		<content>invalid content</content>
-	</invalid_note>
-	<note>
-		<id>1</id>
-		<content>kunde 1</content>
-	</note>
-	<specialNote>
-		<id>99</id>
-		<content>special</content>
-	</specialNote>
-	<note>
-		<id>2</id>
-		<content>kunde 2</content>
-	</note>
-	<note>
-		<id>3</id>
-		<content>kunde 3</content>
-	</note>
+	<group id="1">
+		<invalid_note>
+			<id>0</id>
+			<content>invalid content</content>
+		</invalid_note>
+		<note>
+			<id>1</id>
+			<content>kunde 1</content>
+		</note>
+		<specialNote>
+			<id>99</id>
+			<content>special</content>
+		</specialNote>
+	</group>
+	<group id="2">
+		<note>
+			<id>2</id>
+			<content>kunde 2</content>
+		</note>
+		<note>
+			<id>3</id>
+			<content>kunde 3</content>
+		</note>
+	</group>
 </notes>

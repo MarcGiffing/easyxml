@@ -13,9 +13,9 @@ public interface ItemReader<T, R> {
 	/**
 	 * Indicates if the reader is responsible for the current context
 	 * 
-	 * @param contxt
+	 * @param context
 	 * @return
 	 */
-	boolean shouldHandle(ParseContext contxt);
+	boolean shouldHandle(ParseContext context);
 
 }

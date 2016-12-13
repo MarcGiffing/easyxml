@@ -4,24 +4,50 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import javax.xml.stream.XMLStreamReader;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jdom2.Element;
 import org.junit.Test;
 
+import easyxml.context.ParseContext;
 import easyxml.jdom2.example.domain.Note;
 import easyxml.jdom2.reader.JDom2ItemReaderBuilder;
 import easyxml.jdom2.reader.JDom2ReaderBuilder;
 import easyxml.reader.Parser;
+import easyxml.reader.item.ItemReader;
 
 public class NoteReaderTest {
 
+	public static class NoteContext extends ParseContext {
+		Long latestGroupId;
+	}
+	
 	@Test
 	public void test_with_external_item_reader_class() throws Exception {
-
+		
 		try (InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"))) {
 			Parser<Element, Note> parser = JDom2ReaderBuilder
 				.<Note> reader()
+				.parseContext(new NoteContext())
+				.addStaxItemReader(new ItemReader<XMLStreamReader, Note>() {
+					
+					private NoteContext context;
+					
+					@Override
+					public boolean shouldHandle(ParseContext context) {
+						this.context = (NoteContext) context;
+						return context.getPath().equals("notes/group");
+					}
+					
+					@Override
+					public Note read(XMLStreamReader t) {
+						Long groupId = Long.valueOf(t.getAttributeValue(null, "id"));
+						this.context.latestGroupId = groupId;
+						return null;
+					}
+				})
 				.addItemReader(new NoteItemReader())
 				.setInputStream(inputStream)
 				.build();
@@ -43,13 +69,13 @@ public class NoteReaderTest {
 				.addItemReader(
 					JDom2ItemReaderBuilder
 						.<Note> itemReader()
-						.shouldHandle((p) -> p.getPath().equals("notes/note"))
+						.shouldHandle((p) -> p.getPath().equals("notes/group/note"))
 						.withFunction((e) -> {
 							return parseNote(e);
 						}).build())
 				.addItemReader(
 					JDom2ItemReaderBuilder.<Note> itemReader()
-						.shouldHandle("notes/specialNote")
+						.shouldHandle("notes/group/specialNote")
 						.withFunction((e) -> {
 							return parseNote(e);
 						}).build())

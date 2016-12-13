@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.stream.XMLStreamReader;
 
 import easyxml.context.ParseContext;
 import easyxml.reader.Parser;
+import easyxml.reader.item.ItemReader;
 
 public class JaxbReaderBuilder<R> {
 
@@ -19,6 +21,8 @@ public class JaxbReaderBuilder<R> {
 	private Parser<JAXBElement<R>, R> parser;
 
 	private List<JaxbReader<R>> readers = new ArrayList<>();
+	
+	private List<ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
 
 	private JaxbReaderBuilder() {
 	}
@@ -27,7 +31,7 @@ public class JaxbReaderBuilder<R> {
 		JaxbReaderBuilder<R> builder = new JaxbReaderBuilder<R>();
 		builder.reader = new JaxbReader<R>(new ArrayList<>(), jaxbContextPath);
 		builder.readers.add(builder.reader);
-		builder.parser = new Parser<JAXBElement<R>, R>(builder.readers, new ParseContext());
+		builder.parser = new Parser<JAXBElement<R>, R>(builder.readers, builder.staxItemReaders, new ParseContext());
 		return builder;
 	}
 
@@ -52,6 +56,11 @@ public class JaxbReaderBuilder<R> {
 
 	public JaxbReaderBuilder<R> addItemReader(JaxbItemReader<JAXBElement<R>, R> itemReader) {
 		this.reader.getItemReaders().add(itemReader);
+		return this;
+	}
+	
+	public JaxbReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, R> itemReader) {
+		this.staxItemReaders.add(itemReader);
 		return this;
 	}
 

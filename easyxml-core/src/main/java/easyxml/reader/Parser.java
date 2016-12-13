@@ -15,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import easyxml.context.ParseContext;
 import easyxml.context.TransformContext;
 import easyxml.reader.item.ItemReader;
+import easyxml.stax.reader.StaxReader;
+import easyxml.stax.reader.context.StaxTransformerResult;
 
 public class Parser<T, R> implements Iterable<R> {
 
@@ -31,9 +33,12 @@ public class Parser<T, R> implements Iterable<R> {
 	private Reader<T, R> currentReader;
 
 	private ItemReader<T, R> currentItemReader = null;
+	
+	private List<? extends ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
 
-	public Parser(List<? extends Reader<T, R>> readers, ParseContext context) {
+	public Parser(List<? extends Reader<T, R>> readers, List<? extends ItemReader<XMLStreamReader, R>> staxItemReaders, ParseContext context) {
 		this.readers = readers;
+		this.staxItemReaders = staxItemReaders;
 		this.context = context;
 	}
 
@@ -65,10 +70,17 @@ public class Parser<T, R> implements Iterable<R> {
 				if (streamReader.isStartElement()) {
 					String localName = streamReader.getLocalName();
 					currentElementPath.add(localName);
+					String path = StringUtils.join(currentElementPath, "/");
+					context.setPath(path);
+					
+					for (ItemReader<XMLStreamReader, R> staxItemReader : staxItemReaders) {
+						if(staxItemReader.shouldHandle(context)) {
+							staxItemReader.read(new StaxTransformerResult(streamReader).getContent());
+						}
+					}
+					
 					for (Reader<T, R> reader : readers) {
-						String path = StringUtils.join(currentElementPath, "/");
 						for (ItemReader<T, R> itemReader : reader.getItemReaders()) {
-							context.setPath(path);
 							if ((itemReader).shouldHandle(context)) {
 								if (currentElementPath.size() > 0) {
 									currentElementPath.remove(currentElementPath.size() - 1);
