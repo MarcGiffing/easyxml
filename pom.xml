@@ -81,54 +81,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.0</version>
-				<inherited>false</inherited>
-				<!-- Uncomment the following element to override the version of AsciidoctorJ -->
-				<dependencies>
-					<dependency>
-						<groupId>org.asciidoctor</groupId>
-						<artifactId>asciidoctorj</artifactId>
-						<version>1.5.2</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<sourceDirectory>src/docs/asciidoc</sourceDirectory>
-					<!-- If you set baseDir to ${project.basedir}, top-level includes are 
-						resolved relative to the project root -->
-					<!-- <baseDir>${project.basedir}</baseDir> -->
-					<!-- Attributes common to all output formats -->
-					<attributes>
-						<sourcedir>${project.build.sourceDirectory}</sourcedir>
-						<project-version>${project.version}</project-version>
-					</attributes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>asciidoc-to-html</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>process-asciidoc</goal>
-						</goals>
-						<configuration>
-							<backend>html5</backend>
-							<sourceHighlighter>coderay</sourceHighlighter>
-							<attributes>
-								<imagesdir>./images</imagesdir>
-								<toc>left</toc>
-								<icons>font</icons>
-								<sectanchors>true</sectanchors>
-								<!-- set the idprefix to blank -->
-								<idprefix />
-								<idseparator>-</idseparator>
-								<docinfo1>true</docinfo1>
-							</attributes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
 				<version>1.6.7</version>
