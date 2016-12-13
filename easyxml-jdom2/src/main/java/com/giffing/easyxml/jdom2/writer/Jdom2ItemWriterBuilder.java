@@ -3,21 +3,22 @@ package com.giffing.easyxml.jdom2.writer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
 
 public class Jdom2ItemWriterBuilder {
 
-	protected Function<String, Boolean> shouldHandle;
+	protected Function<ParseContext, Boolean> shouldHandle;
 
 	protected Consumer<Jdom2WriterContext> consumer;
 
-	public Jdom2ItemWriterBuilder shouldHandle(Function<String, Boolean> shouldHandle) {
+	public Jdom2ItemWriterBuilder shouldHandle(Function<ParseContext, Boolean> shouldHandle) {
 		this.shouldHandle = shouldHandle;
 		return this;
 	}
 
-	public Jdom2ItemWriterBuilder shouldHandle(String path) {
-		return this.shouldHandle((p) -> p.equals(path));
+	public Jdom2ItemWriterBuilder shouldHandle(ParseContext parseContext) {
+		return this.shouldHandle((p) -> p.equals(parseContext.getPath()));
 	}
 
 	public Jdom2ItemWriterBuilder withFunction(Consumer<Jdom2WriterContext> consumer) {
@@ -34,8 +35,8 @@ public class Jdom2ItemWriterBuilder {
 			}
 
 			@Override
-			public boolean shouldHandle(String join) {
-				return shouldHandle.apply(join);
+			public boolean shouldHandle(ParseContext parseContext) {
+				return shouldHandle.apply(parseContext);
 			}
 		};
 	}

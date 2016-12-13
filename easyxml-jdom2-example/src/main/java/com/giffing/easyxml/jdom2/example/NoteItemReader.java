@@ -6,8 +6,6 @@ import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.jdom2.example.domain.Note;
 import com.giffing.easyxml.reader.item.ItemReader;
 
-import easyxml.jdom2.example.NoteReaderTest.NoteContext;
-
 public class NoteItemReader implements ItemReader<Element, Note> {
 
 	private NoteContext context;

@@ -22,7 +22,7 @@ public class JaxbReaderBuilder<R> {
 
 	private List<JaxbReader<R>> readers = new ArrayList<>();
 	
-	private List<ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
+	private List<ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
 	private JaxbReaderBuilder() {
 	}
@@ -59,7 +59,7 @@ public class JaxbReaderBuilder<R> {
 		return this;
 	}
 	
-	public JaxbReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, R> itemReader) {
+	public JaxbReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, Void> itemReader) {
 		this.staxItemReaders.add(itemReader);
 		return this;
 	}

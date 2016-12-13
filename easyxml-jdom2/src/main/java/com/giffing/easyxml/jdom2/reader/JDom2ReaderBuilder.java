@@ -23,7 +23,7 @@ public class JDom2ReaderBuilder<R> {
 
 	private List<JDom2Reader<R>> readers = new ArrayList<>();
 	
-	private List<ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
+	private List<ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
 	private JDom2ReaderBuilder() {
 	}
@@ -60,7 +60,7 @@ public class JDom2ReaderBuilder<R> {
 		return this;
 	}
 	
-	public JDom2ReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, R> itemReader) {
+	public JDom2ReaderBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, Void> itemReader) {
 		this.staxItemReaders.add(itemReader);
 		return this;
 	}

@@ -34,9 +34,9 @@ public class Parser<T, R> implements Iterable<R> {
 
 	private ItemReader<T, R> currentItemReader = null;
 	
-	private List<? extends ItemReader<XMLStreamReader, R>> staxItemReaders = new ArrayList<>();
+	private List<? extends ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
-	public Parser(List<? extends Reader<T, R>> readers, List<? extends ItemReader<XMLStreamReader, R>> staxItemReaders, ParseContext context) {
+	public Parser(List<? extends Reader<T, R>> readers, List<? extends ItemReader<XMLStreamReader, Void>> staxItemReaders, ParseContext context) {
 		this.readers = readers;
 		this.staxItemReaders = staxItemReaders;
 		this.context = context;
@@ -73,7 +73,7 @@ public class Parser<T, R> implements Iterable<R> {
 					String path = StringUtils.join(currentElementPath, "/");
 					context.setPath(path);
 					
-					for (ItemReader<XMLStreamReader, R> staxItemReader : staxItemReaders) {
+					for (ItemReader<XMLStreamReader, Void> staxItemReader : staxItemReaders) {
 						if(staxItemReader.shouldHandle(context)) {
 							staxItemReader.read(new StaxTransformerResult(streamReader).getContent());
 						}

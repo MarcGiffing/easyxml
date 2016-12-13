@@ -11,6 +11,8 @@ import javax.xml.stream.XMLStreamException;
 import org.jdom2.Element;
 import org.junit.Test;
 
+import com.giffing.easyxml.jdom2.example.GroupItemReader;
+import com.giffing.easyxml.jdom2.example.NoteContext;
 import com.giffing.easyxml.jdom2.writer.Jdom2ItemWriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Jdom2WriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Writer;
@@ -25,12 +27,15 @@ public class NoteWriterTest {
 			Writer writer = Jdom2WriterBuilder.writer()
 				.setInputStream(inputStream)
 				.setOutputStream(outputStream)
+				.setParseContext(new NoteContext())
+				.addStaxItemReader(new GroupItemReader())
 				.addItemWriter(
 					new Jdom2ItemWriterBuilder()
-						.shouldHandle("notes/note")
+						.shouldHandle(p -> p.getPath().equals("notes/group/note"))
 						.withFunction((c) -> {
+							NoteContext noteContext = (NoteContext) c.getContext();
 							Element contentElement = c.getElement().getChild("content");
-							contentElement.setText("content: " + contentElement.getText());
+							contentElement.setText("content: " + contentElement.getText()  + " group " + noteContext.latestGroupId);
 						})
 						.build())
 

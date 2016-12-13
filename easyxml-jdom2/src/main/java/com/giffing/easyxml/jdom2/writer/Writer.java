@@ -22,18 +22,25 @@ import org.jdom2.output.support.StAXStreamProcessor;
 import org.jdom2.transform.JDOMResult;
 
 import com.giffing.easyxml.ReaderToWriter;
+import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
 import com.giffing.easyxml.jdom2.writer.processor.CustomStAXStreamProcessor;
+import com.giffing.easyxml.reader.item.ItemReader;
+import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
 
 public class Writer {
 
 	private InputStream inputStream;
 
 	private OutputStream outputStream;
+	
+	private ParseContext parseContext = new ParseContext();
 
 	private String namespace = "";
 
 	private List<Jdom2ItemWriter> itemWriter = new ArrayList<>();
+	
+	private List<ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
 	public void writeAll()
 		throws XMLStreamException,
@@ -73,14 +80,22 @@ public class Writer {
 				currentElementPath.add(localName);
 				boolean handled = false;
 				String joinPath = StringUtils.join(currentElementPath, "/");
+				parseContext.setPath(joinPath);
+				
+				for (ItemReader<XMLStreamReader, Void> staxItemReader : staxItemReaders) {
+					if(staxItemReader.shouldHandle(parseContext)) {
+						staxItemReader.read(new StaxTransformerResult(xsr).getContent());
+					}
+				}
+				
 				for (Jdom2ItemWriter itemWriter : this.itemWriter) {
-					if (itemWriter.shouldHandle(joinPath)) {
+					if (itemWriter.shouldHandle(parseContext)) {
 						JDOMResult result = new JDOMResult();
 						t.transform(new StAXSource(xsr), result);
 						Document document = result.getDocument();
 						Element rootElement = document.getRootElement();
 
-						Jdom2WriterContext context = new Jdom2WriterContext(rootElement);
+						Jdom2WriterContext context = new Jdom2WriterContext(parseContext, rootElement);
 
 						itemWriter.write(context);
 						processor.process(writer, Format.getPrettyFormat(), rootElement);
@@ -137,6 +152,18 @@ public class Writer {
 
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
+	}
+
+	public List<ItemReader<XMLStreamReader, Void>> getStaxItemReaders() {
+		return staxItemReaders;
+	}
+
+	public void setStaxItemReaders(List<ItemReader<XMLStreamReader, Void>> staxItemReaders) {
+		this.staxItemReaders = staxItemReaders;
+	}
+	
+	public void setParseContext(ParseContext parseContext) {
+		this.parseContext = parseContext;
 	}
 
 }

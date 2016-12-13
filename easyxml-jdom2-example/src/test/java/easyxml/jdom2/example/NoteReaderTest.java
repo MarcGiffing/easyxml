@@ -12,6 +12,8 @@ import org.jdom2.Element;
 import org.junit.Test;
 
 import com.giffing.easyxml.context.ParseContext;
+import com.giffing.easyxml.jdom2.example.GroupItemReader;
+import com.giffing.easyxml.jdom2.example.NoteContext;
 import com.giffing.easyxml.jdom2.example.NoteItemReader;
 import com.giffing.easyxml.jdom2.example.domain.Note;
 import com.giffing.easyxml.jdom2.reader.JDom2ItemReaderBuilder;
@@ -21,10 +23,6 @@ import com.giffing.easyxml.reader.item.ItemReader;
 
 public class NoteReaderTest {
 
-	public static class NoteContext extends ParseContext {
-		public Long latestGroupId;
-	}
-	
 	@Test
 	public void test_with_external_item_reader_class() throws Exception {
 		
@@ -32,23 +30,7 @@ public class NoteReaderTest {
 			Parser<Element, Note> parser = JDom2ReaderBuilder
 				.<Note> reader()
 				.parseContext(new NoteContext())
-				.addStaxItemReader(new ItemReader<XMLStreamReader, Note>() {
-					
-					private NoteContext context;
-					
-					@Override
-					public boolean shouldHandle(ParseContext context) {
-						this.context = (NoteContext) context;
-						return context.getPath().equals("notes/group");
-					}
-					
-					@Override
-					public Note read(XMLStreamReader t) {
-						Long groupId = Long.valueOf(t.getAttributeValue(null, "id"));
-						this.context.latestGroupId = groupId;
-						return null;
-					}
-				})
+				.addStaxItemReader(new GroupItemReader())
 				.addItemReader(new NoteItemReader())
 				.setInputStream(inputStream)
 				.build();
