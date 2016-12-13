@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>easyxml-jdom2</artifactId>
 	<parent>
-		<groupId>easyxml</groupId>
+		<groupId>com.giffing.easyxml</groupId>
 		<artifactId>easyxml-parent</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
 		<relativePath>../</relativePath>
@@ -10,7 +10,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>easyxml</groupId>
+			<groupId>com.giffing.easyxml</groupId>
 			<artifactId>easyxml-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>

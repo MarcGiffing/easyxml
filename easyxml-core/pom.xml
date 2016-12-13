@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>easyxml-core</artifactId>
 	<parent>
-		<groupId>easyxml</groupId>
+		<groupId>com.giffing.easyxml</groupId>
 		<artifactId>easyxml-parent</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
 		<relativePath>../</relativePath>
