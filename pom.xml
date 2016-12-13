@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>easyxml</groupId>
 	<artifactId>easyxml-parent</artifactId>
@@ -8,6 +9,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<name>easyxml</name>
+	<description>
+		Simplifies parsing and modifying of (huge) XML streams (files) based on the StAX parser with combination of JAXB or JDom2
+	</description>
 
 
 	<url>https://github.com/MarcGiffing/easyxml</url>
@@ -21,8 +27,18 @@
 		<url>https://github.com/MarcGiffing/easyxml/</url>
 		<connection>scm:git:git://github.com/MarcGiffing/easyxml</connection>
 		<developerConnection>scm:git:git@github.com:MarcGiffing/easyxml</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>mgiffing</id>
+			<name>Marc Giffing</name>
+			<roles>
+				<role>Project lead</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<dependencyManagement>
 		<dependencies>
