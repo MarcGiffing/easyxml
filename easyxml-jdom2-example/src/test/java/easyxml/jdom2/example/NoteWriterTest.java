@@ -44,4 +44,28 @@ public class NoteWriterTest {
 			writer.writeAll();
 		}
 	}
+	
+	@Test
+	public void weather() throws XMLStreamException, Exception {
+		try (
+			InputStream inputStream = new FileInputStream(new File("src/main/resources/weather.xml"));
+			OutputStream outputStream = new FileOutputStream(new File("target/weather.xml"))) {
+			Writer writer = Jdom2WriterBuilder.writer()
+				.setInputStream(inputStream)
+				.setOutputStream(outputStream)
+				.addItemWriter(
+					new Jdom2ItemWriterBuilder()
+						.shouldHandle(p -> p.getPath().equals("wx_station_index/station"))
+						.withFunction((c) -> {
+							String stationId = c.getElement().getChildTextTrim("station_id");
+							 c.getElement().getChild("station_id").setText("whoohooo " + stationId);
+						})
+						.build())
+
+				.build();
+
+			writer.writeAll();
+		}
+	}
+
 }
