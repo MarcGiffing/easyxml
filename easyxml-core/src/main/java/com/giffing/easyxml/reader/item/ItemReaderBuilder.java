@@ -4,6 +4,12 @@ import java.util.function.Function;
 
 import com.giffing.easyxml.context.ParseContext;
 
+/**
+ * Each 
+ *
+ * @param <T>
+ * @param <R>
+ */
 public abstract class ItemReaderBuilder<T, R> {
 
 	protected Function<ParseContext, Boolean> shouldHandle;
