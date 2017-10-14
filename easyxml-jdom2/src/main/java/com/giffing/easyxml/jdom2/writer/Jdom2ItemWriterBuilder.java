@@ -9,6 +9,8 @@ import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
 public class Jdom2ItemWriterBuilder {
 
 	protected Function<ParseContext, Boolean> shouldHandle;
+	
+	protected boolean shouldRemove;
 
 	protected Consumer<Jdom2WriterContext> consumer;
 
@@ -18,9 +20,19 @@ public class Jdom2ItemWriterBuilder {
 	}
 
 	public Jdom2ItemWriterBuilder shouldHandle(ParseContext parseContext) {
-		return this.shouldHandle((p) -> p.equals(parseContext.getPath()));
+		return this.shouldHandle((p) -> p.getPath().equals(parseContext.getPath()));
 	}
-
+	
+	public Jdom2ItemWriterBuilder shouldRemove(boolean remove) {
+		this.shouldRemove = remove;
+		return this;
+	}
+	
+	public Jdom2ItemWriterBuilder remove() {
+		this.shouldRemove = true;
+		return this;
+	}
+	
 	public Jdom2ItemWriterBuilder handle(Consumer<Jdom2WriterContext> consumer) {
 		this.consumer = consumer;
 		return this;
@@ -30,13 +42,18 @@ public class Jdom2ItemWriterBuilder {
 		return new Jdom2ItemWriter() {
 
 			@Override
-			public void write(Jdom2WriterContext context) {
+			public void handle(Jdom2WriterContext context) {
 				consumer.accept(context);
 			}
 
 			@Override
 			public boolean shouldHandle(ParseContext parseContext) {
 				return shouldHandle.apply(parseContext);
+			}
+
+			@Override
+			public boolean shouldRemove() {
+				return shouldRemove;
 			}
 		};
 	}

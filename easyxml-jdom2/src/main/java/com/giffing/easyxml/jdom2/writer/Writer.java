@@ -92,13 +92,15 @@ public class Writer {
 					if (itemWriter.shouldHandle(parseContext)) {
 						JDOMResult result = new JDOMResult();
 						t.transform(new StAXSource(xsr), result);
-						Document document = result.getDocument();
-						Element rootElement = document.getRootElement();
-
-						Jdom2WriterContext context = new Jdom2WriterContext(parseContext, rootElement);
-
-						itemWriter.write(context);
-						processor.process(writer, Format.getPrettyFormat(), rootElement);
+						if(!itemWriter.shouldRemove()) {
+							Document document = result.getDocument();
+							Element rootElement = document.getRootElement();
+	
+							Jdom2WriterContext context = new Jdom2WriterContext(parseContext, rootElement);
+							
+							itemWriter.handle(context);
+							processor.process(writer, Format.getPrettyFormat(), rootElement);
+						}
 						handled = true;
 						break;
 					}

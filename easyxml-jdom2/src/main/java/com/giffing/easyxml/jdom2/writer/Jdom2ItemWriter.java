@@ -5,8 +5,10 @@ import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
 
 public interface Jdom2ItemWriter {
 
-	boolean shouldHandle(ParseContext join);
+	boolean shouldHandle(ParseContext parseContext);
 
-	void write(Jdom2WriterContext context);
+	void handle(Jdom2WriterContext context);
 
+	boolean shouldRemove();
+	
 }

@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import javax.xml.stream.XMLStreamException;
 
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.junit.Test;
 
 import com.giffing.easyxml.jdom2.example.GroupItemReader;
@@ -30,6 +31,14 @@ public class NoteWriterTest {
 				.setParseContext(new NoteContext())
 				.addStaxItemReader(new GroupItemReader())
 				.addItemWriter(
+						new Jdom2ItemWriterBuilder()
+						.shouldHandle(p -> {
+							NoteContext noteContext = (NoteContext) p;
+							return p.getPath().equals("notes/group/note") && noteContext.latestGroupId == 2;
+						})
+						.remove()
+						.build())
+				.addItemWriter(
 					new Jdom2ItemWriterBuilder()
 						.shouldHandle(p -> p.getPath().equals("notes/group/note"))
 						.handle((c) -> {
@@ -38,7 +47,6 @@ public class NoteWriterTest {
 							contentElement.setText("content: " + contentElement.getText()  + " group " + noteContext.latestGroupId);
 						})
 						.build())
-
 				.build();
 
 			writer.writeAll();
@@ -61,11 +69,10 @@ public class NoteWriterTest {
 							 c.getElement().getChild("station_id").setText("whoohooo " + stationId);
 						})
 						.build())
-
 				.build();
 
 			writer.writeAll();
 		}
 	}
-
+	
 }

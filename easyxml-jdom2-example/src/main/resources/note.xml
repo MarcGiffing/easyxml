@@ -28,4 +28,14 @@
 			<content>kunde 3</content>
 		</note>
 	</group>
+	<group id="3">
+		<note>
+			<id>3</id>
+			<content>kunde 2</content>
+		</note>
+		<note>
+			<id>4</id>
+			<content>kunde 3</content>
+		</note>
+	</group>
 </notes>

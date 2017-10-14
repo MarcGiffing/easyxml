@@ -143,8 +143,10 @@ for (Note note : parser) {
 == Update with JDom2
 
 With the help of the Jdom2WriterBuilder you can modify existing XML files without knowing the hole structure
-of the document. The approach is the same as with the JDom2Reader, with you can modify the document within the
+of the document. The approach is the same as with the JDom2Reader, with it you can modify the document within the
 *handle* and the changes are automatically written back to the output stream.
+
+We can also remove specific parts of the document with the *remove* method instead of using the *handle* method.
 
 [source,java]
 ---------------------------------------------------------------------
@@ -155,6 +157,14 @@ OutputStream outputStream = new FileOutputStream(new File("note_modified.xml")))
 Writer writer = Jdom2WriterBuilder.writer()
 	.setInputStream(inputStream)
 	.setOutputStream(outputStream)
+	.addItemWriter(
+		new Jdom2ItemWriterBuilder()
+			.shouldHandle(p -> {
+				NoteContext noteContext = (NoteContext) p;
+				return p.getPath().equals("notes/group/note") && noteContext.latestGroupId == 2;
+			})
+			.remove()
+			.build())
 	.addItemWriter(
 		new Jdom2ItemWriterBuilder()
 			.shouldHandle("notes/note")
