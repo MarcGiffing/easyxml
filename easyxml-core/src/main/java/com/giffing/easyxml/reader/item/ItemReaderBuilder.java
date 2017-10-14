@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import com.giffing.easyxml.context.ParseContext;
 
-public class ItemReaderBuilder<T, R> {
+public abstract class ItemReaderBuilder<T, R> {
 
 	protected Function<ParseContext, Boolean> shouldHandle;
 
@@ -19,7 +19,7 @@ public class ItemReaderBuilder<T, R> {
 		return this.shouldHandle((p) -> p.getPath().equals(path));
 	}
 
-	public ItemReaderBuilder<T, R> withFunction(Function<T, R> function) {
+	public ItemReaderBuilder<T, R> handle(Function<T, R> function) {
 		this.function = function;
 		return this;
 	}

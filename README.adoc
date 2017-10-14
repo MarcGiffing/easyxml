@@ -57,7 +57,7 @@ Parser<Element, Note> parser = JDom2ReaderBuilder
 		JDom2ItemReaderBuilder
 			.<Note> itemReader()
 			.shouldHandle("notes/note")
-			.withFunction((e) -> {
+			.handle((e) -> {
 				Note note = new Note();
 				note.setId(Long.valueOf(e.getChildTextTrim("id")));
 				note.setContent(e.getChildTextTrim("content"));
@@ -84,15 +84,15 @@ the path in the DOM tree.
 .shouldHandle("notes/note")
 ---------------------------------------------------------------------
 
-When the path in the *shouldHandle* method matches the current path then the code within the *withFunction* method is called. 
-The *withFunction* function expects an *Java 8 Function<Element,Boolean>*. 
+When the path in the *shouldHandle* method matches the current path then the code within the *handle* method is called. 
+The *handle* function expects an *Java 8 Function<Element,Boolean>*. 
 The current element is automatically converted into an JDom2 element and can be accessed as usual. 
 
-Inside the *withFunction* a new instance of the *Note* class is created and returnd.
+Inside the *handle* a new instance of the *Note* class is created and returnd.
 
 [source,java]
 ---------------------------------------------------------------------
-  .withFunction((e) -> {
+  .handle((e) -> {
     Note note = new Note();
     note.setId(Long.valueOf(e.getChildTextTrim("id")));
     note.setContent(e.getChildTextTrim("content"));
@@ -144,7 +144,7 @@ for (Note note : parser) {
 
 With the help of the Jdom2WriterBuilder you can modify existing XML files without knowing the hole structure
 of the document. The approach is the same as with the JDom2Reader, with you can modify the document within the
-*withFunction* and the changes are automatically written back to the output stream.
+*handle* and the changes are automatically written back to the output stream.
 
 [source,java]
 ---------------------------------------------------------------------
@@ -158,7 +158,7 @@ Writer writer = Jdom2WriterBuilder.writer()
 	.addItemWriter(
 		new Jdom2ItemWriterBuilder()
 			.shouldHandle("notes/note")
-			.withFunction((c) -> {
+			.handle((c) -> {
 
 				Element contentElement = c.getElement().getChild("content");
 				contentElement.setText("content: " + contentElement.getText());

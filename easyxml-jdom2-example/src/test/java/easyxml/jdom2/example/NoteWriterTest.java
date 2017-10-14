@@ -32,7 +32,7 @@ public class NoteWriterTest {
 				.addItemWriter(
 					new Jdom2ItemWriterBuilder()
 						.shouldHandle(p -> p.getPath().equals("notes/group/note"))
-						.withFunction((c) -> {
+						.handle((c) -> {
 							NoteContext noteContext = (NoteContext) c.getContext();
 							Element contentElement = c.getElement().getChild("content");
 							contentElement.setText("content: " + contentElement.getText()  + " group " + noteContext.latestGroupId);
@@ -56,7 +56,7 @@ public class NoteWriterTest {
 				.addItemWriter(
 					new Jdom2ItemWriterBuilder()
 						.shouldHandle(p -> p.getPath().equals("wx_station_index/station"))
-						.withFunction((c) -> {
+						.handle((c) -> {
 							String stationId = c.getElement().getChildTextTrim("station_id");
 							 c.getElement().getChild("station_id").setText("whoohooo " + stationId);
 						})

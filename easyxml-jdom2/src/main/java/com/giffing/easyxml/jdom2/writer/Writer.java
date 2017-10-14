@@ -21,12 +21,12 @@ import org.jdom2.output.Format;
 import org.jdom2.output.support.StAXStreamProcessor;
 import org.jdom2.transform.JDOMResult;
 
-import com.giffing.easyxml.ReaderToWriter;
 import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
 import com.giffing.easyxml.jdom2.writer.processor.CustomStAXStreamProcessor;
 import com.giffing.easyxml.reader.item.ItemReader;
 import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
+import com.giffing.easyxml.util.ReaderToWriter;
 
 public class Writer {
 

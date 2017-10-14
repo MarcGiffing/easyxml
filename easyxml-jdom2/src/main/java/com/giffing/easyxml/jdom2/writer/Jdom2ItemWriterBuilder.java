@@ -21,7 +21,7 @@ public class Jdom2ItemWriterBuilder {
 		return this.shouldHandle((p) -> p.equals(parseContext.getPath()));
 	}
 
-	public Jdom2ItemWriterBuilder withFunction(Consumer<Jdom2WriterContext> consumer) {
+	public Jdom2ItemWriterBuilder handle(Consumer<Jdom2WriterContext> consumer) {
 		this.consumer = consumer;
 		return this;
 	}

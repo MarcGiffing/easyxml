@@ -1,4 +1,4 @@
-package com.giffing.easyxml;
+package com.giffing.easyxml.util;
 
 /*   Copyright 2004 BEA Systems, Inc.
  *

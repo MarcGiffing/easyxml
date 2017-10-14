@@ -15,8 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.context.TransformContext;
 import com.giffing.easyxml.reader.item.ItemReader;
-import com.giffing.easyxml.stax.reader.StaxReader;
 import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
+
 
 public class Parser<T, R> implements Iterable<R> {
 
