@@ -52,7 +52,7 @@ public class Jdom2ItemWriterBuilder {
 			}
 
 			@Override
-			public boolean shouldRemove() {
+			public boolean shouldRemove(Jdom2WriterContext context) {
 				return shouldRemove;
 			}
 		};

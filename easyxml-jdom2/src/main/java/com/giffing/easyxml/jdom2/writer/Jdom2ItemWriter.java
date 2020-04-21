@@ -9,6 +9,6 @@ public interface Jdom2ItemWriter {
 
 	void handle(Jdom2WriterContext context);
 
-	boolean shouldRemove();
+	boolean shouldRemove(Jdom2WriterContext context);
 	
 }
