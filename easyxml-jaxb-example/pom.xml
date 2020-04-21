@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.giffing.easyxml</groupId>
 		<artifactId>easyxml-parent</artifactId>
-		<version>0.0.5-SNAPSHOT</version>
+		<version>0.0.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>easyxml-jaxb-example</artifactId>
 
