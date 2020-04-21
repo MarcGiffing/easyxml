@@ -7,8 +7,6 @@ import com.giffing.easyxml.context.ParseContext;
 /**
  * Each 
  *
- * @param <T>
- * @param <R>
  */
 public abstract class ItemReaderBuilder<T, R> {
 

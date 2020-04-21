@@ -6,7 +6,6 @@ public interface ItemReader<T, R> {
 
 	/**
 	 * @param t transform result
-	 * @return
 	 */
 	R read(T t);
 
@@ -14,7 +13,6 @@ public interface ItemReader<T, R> {
 	 * Indicates if the reader is responsible for the current context
 	 * 
 	 * @param context
-	 * @return
 	 */
 	boolean shouldHandle(ParseContext context);
 

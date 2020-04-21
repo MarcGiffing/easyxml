@@ -11,15 +11,18 @@ package com.giffing.easyxml.context;
  * be thousands of note elements in each group. You can read the group id with
  * Stax put it in the custom ParseContext and read each dom element
  * 
+ * <pre>
+ * {@code
  * <notes>
- * 	<group id="1">
- * 		<note>a text</note>
- * 	</group>
- *  <group id="2">
- *  	<note>another text</note>
- * 	</group>
+ *     <group id="1">
+ *         <note>a text</note>
+ *     </group>
+ *     <group id="2">
+ *         <note>another text</note>
+ *     </group>
  * </notes>
- *
+ * }
+ * </pre>
  */
 public class ParseContext {
 

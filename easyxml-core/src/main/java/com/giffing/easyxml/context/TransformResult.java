@@ -3,7 +3,7 @@ package com.giffing.easyxml.context;
 /**
  * Holds the result an XML processing. E.g. it could be an XMLStreamReader, JAXB or an JDOM2 element.
  *
- * @param <T>
+ * @param <T> the transform result object
  */
 public interface TransformResult<T> {
 	
