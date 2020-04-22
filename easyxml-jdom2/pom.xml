@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.giffing.easyxml</groupId>
 		<artifactId>easyxml-parent</artifactId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.7</version>
 		<relativePath>../</relativePath>
 	</parent>
 	
