@@ -17,6 +17,7 @@ import javax.xml.transform.stax.StAXSource;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.support.StAXStreamProcessor;
 import org.jdom2.transform.JDOMResult;
@@ -36,7 +37,11 @@ public class Writer {
 	
 	private ParseContext parseContext = new ParseContext();
 
-	private String namespace = "";
+	private String namespace;
+	
+	private String encoding = "UTF-8";
+	
+	private Format format = Format.getPrettyFormat();
 
 	private List<Jdom2ItemWriter> itemWriter = new ArrayList<>();
 	
@@ -54,14 +59,12 @@ public class Writer {
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 		TransformerFactory tf = TransformerFactory.newInstance();
 		StAXStreamProcessor processor = new CustomStAXStreamProcessor(namespace);
-
 		XMLStreamReader xsr = null;
 		XMLStreamWriter writer = null;
 
-		xsr = xif.createXMLStreamReader(inputStream, "UTF-8");
-
-		writer = outputFactory.createXMLStreamWriter(outputStream, "UTF-8");
-
+		xsr = xif.createXMLStreamReader(inputStream, encoding);
+		writer = outputFactory.createXMLStreamWriter(outputStream, encoding);
+		
 		ReaderToWriter readToWrite = new ReaderToWriter();
 		readToWrite.setStreamWriter(writer);
 
@@ -94,10 +97,11 @@ public class Writer {
 						t.transform(new StAXSource(xsr), result);
 						Document document = result.getDocument();
 						Element rootElement = document.getRootElement();
+						rootElement.addNamespaceDeclaration(Namespace.getNamespace(namespace));
 						Jdom2WriterContext context = new Jdom2WriterContext(parseContext, rootElement);
 						if(!itemWriter.shouldRemove(context)) {
 							itemWriter.handle(context);
-							processor.process(writer, Format.getPrettyFormat(), rootElement);
+							processor.process(writer, format, rootElement);
 						}
 						handled = true;
 						break;
@@ -120,6 +124,14 @@ public class Writer {
 				}
 			}
 		}
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 	public InputStream getInputStream() {
@@ -166,4 +178,13 @@ public class Writer {
 		this.parseContext = parseContext;
 	}
 
+	public Format getFormat() {
+		return format;
+	}
+
+	public void setFormat(Format format) {
+		this.format = format;
+	}
+
+	
 }

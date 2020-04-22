@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 import javax.xml.stream.XMLStreamReader;
 
+import org.jdom2.output.Format;
+
 import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.reader.item.ItemReader;
 
@@ -22,6 +24,11 @@ public class Jdom2WriterBuilder<R> {
 		return writer;
 	}
 
+	public Jdom2WriterBuilder<R> setFormat(Format format) {
+		this.writer.setFormat(format);
+		return this;
+	}
+	
 	public Jdom2WriterBuilder<R> setInputStream(InputStream inputStream) {
 		this.writer.setInputStream(inputStream);
 		return this;
@@ -49,6 +56,11 @@ public class Jdom2WriterBuilder<R> {
 	
 	public Jdom2WriterBuilder<R> setParseContext(ParseContext parseContext) {
 		this.writer.setParseContext(parseContext);
+		return this;
+	}
+	
+	public Jdom2WriterBuilder<R> setEncoding(String encoding) {
+		this.writer.setEncoding(encoding);
 		return this;
 	}
 

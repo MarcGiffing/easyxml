@@ -43,13 +43,13 @@ public class NoteWriterTest {
 						.shouldHandle(p -> p.getPath().equals("notes/group/note"))
 						.handle((c) -> {
 							NoteContext noteContext = (NoteContext) c.getContext();
-							Element contentElement = c.getElement().getChild("content");
+							Element contentElement = c.getElement().getChild("content", c.getElement().getNamespace());
 							contentElement.setText("content: " + contentElement.getText()  + " group " + noteContext.latestGroupId);
 						})
 						.build())
 				.build();
 
-			writer.writeAll();
+				writer.writeAll();
 		}
 	}
 	

@@ -9,10 +9,10 @@ import org.jdom2.output.support.FormatStack;
 
 public class CustomStAXStreamProcessor extends AbstractStAXStreamProcessor {
 
-	private String namespace = "";
+	private final Namespace namespace;
 
 	public CustomStAXStreamProcessor(String namespace) {
-		this.namespace = namespace;
+		this.namespace = Namespace.getNamespace(namespace);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class CustomStAXStreamProcessor extends AbstractStAXStreamProcessor {
 		final String prefix = ns.getPrefix();
 		final String uri = ns.getURI();
 		// TODO handle namespace
-		if (!ns.equals(namespace)) {
+		if (!ns.equals(this.namespace)) {
 			out.writeNamespace(prefix, uri);
 		}
 
