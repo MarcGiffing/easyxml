@@ -13,12 +13,9 @@ public class NoteItemReader implements ItemReader<Element, Note> {
 	@Override
 	public Note read(Element element) {
 		Note note = new Note();
-
 		note.setId(Long.valueOf(element.getChildTextTrim("id")));
 		note.setContent(element.getChildTextTrim("content"));
-		
 		note.setGroupId(context.latestGroupId);
-		
 		return note;
 	}
 

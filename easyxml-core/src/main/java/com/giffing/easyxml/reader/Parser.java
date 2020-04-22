@@ -59,19 +59,11 @@ public class Parser<T, R> implements Iterable<R> {
 		try {
 			while (streamReader.hasNext()) {
 				if (streamReader.isEndElement()) {
-					if (currentElementPath.size() > 0) {
-						int lastElementIndex = currentElementPath.size() - 1;
-						if (currentElementPath.get(lastElementIndex).equals(streamReader.getLocalName())) {
-							currentElementPath.remove(lastElementIndex);
-
-						}
-					}
+					removePath();
 				}
 				if (streamReader.isStartElement()) {
-					String localName = streamReader.getLocalName();
-					currentElementPath.add(localName);
-					String path = StringUtils.join(currentElementPath, "/");
-					context.setPath(path);
+					addPath();
+					context.setPath(StringUtils.join(currentElementPath, "/"));
 					
 					for (ItemReader<XMLStreamReader, Void> staxItemReader : staxItemReaders) {
 						if(staxItemReader.shouldHandle(context)) {
@@ -100,6 +92,21 @@ public class Parser<T, R> implements Iterable<R> {
 		}
 
 		return false;
+	}
+
+	private void addPath() {
+		String localName = streamReader.getLocalName();
+		currentElementPath.add(localName);
+	}
+
+	private void removePath() {
+		if (currentElementPath.size() > 0) {
+			int lastElementIndex = currentElementPath.size() - 1;
+			if (currentElementPath.get(lastElementIndex).equals(streamReader.getLocalName())) {
+				currentElementPath.remove(lastElementIndex);
+
+			}
+		}
 	}
 
 	public void close() {

@@ -9,7 +9,7 @@ import com.giffing.easyxml.reader.item.ItemReaderBuilder;
 
 public class JaxbItemReaderBuilder<R> extends ItemReaderBuilder<JAXBElement<R>, R> {
 
-	private Class jaxbClass;
+	private Class<?> jaxbClass;
 
 	public JaxbItemReaderBuilder() {
 		super.handle((e) -> e.getValue());
@@ -37,7 +37,7 @@ public class JaxbItemReaderBuilder<R> extends ItemReaderBuilder<JAXBElement<R>, 
 		return builder;
 	}
 
-	public JaxbItemReaderBuilder<R> withJaxbClass(Class jaxbClass) {
+	public JaxbItemReaderBuilder<R> withJaxbClass(Class<?> jaxbClass) {
 		this.jaxbClass = jaxbClass;
 		return this;
 	}
@@ -57,7 +57,7 @@ public class JaxbItemReaderBuilder<R> extends ItemReaderBuilder<JAXBElement<R>, 
 			}
 
 			@Override
-			public Class getJaxbClass() {
+			public Class<?> getJaxbClass() {
 				return jaxbClass;
 			}
 

@@ -25,7 +25,10 @@ package com.giffing.easyxml.context;
  * </pre>
  */
 public class ParseContext {
-
+	
+	/**
+	 * The current xml element path divided by slash
+	 */
 	private String path;
 
 	public String getPath() {

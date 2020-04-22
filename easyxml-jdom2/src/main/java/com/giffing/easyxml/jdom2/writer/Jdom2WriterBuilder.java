@@ -10,12 +10,12 @@ import org.jdom2.output.Format;
 import com.giffing.easyxml.context.ParseContext;
 import com.giffing.easyxml.reader.item.ItemReader;
 
-public class Jdom2WriterBuilder<R> {
+public class Jdom2WriterBuilder<C extends ParseContext> {
 
 	private Writer writer;
 
-	public static <R> Jdom2WriterBuilder<R> writer() {
-		Jdom2WriterBuilder<R> builder = new Jdom2WriterBuilder<>();
+	public static <C extends ParseContext> Jdom2WriterBuilder<C> writer() {
+		Jdom2WriterBuilder<C> builder = new Jdom2WriterBuilder<>();
 		builder.writer = new Writer();
 		return builder;
 	}
@@ -24,42 +24,42 @@ public class Jdom2WriterBuilder<R> {
 		return writer;
 	}
 
-	public Jdom2WriterBuilder<R> setFormat(Format format) {
+	public Jdom2WriterBuilder<C> setFormat(Format format) {
 		this.writer.setFormat(format);
 		return this;
 	}
 	
-	public Jdom2WriterBuilder<R> setInputStream(InputStream inputStream) {
+	public Jdom2WriterBuilder<C> setInputStream(InputStream inputStream) {
 		this.writer.setInputStream(inputStream);
 		return this;
 	}
 
-	public Jdom2WriterBuilder<R> setOutputStream(OutputStream outputStream) {
+	public Jdom2WriterBuilder<C> setOutputStream(OutputStream outputStream) {
 		this.writer.setOutputStream(outputStream);
 		return this;
 	}
 
-	public Jdom2WriterBuilder<R> setNamespace(String namespace) {
+	public Jdom2WriterBuilder<C> setNamespace(String namespace) {
 		this.writer.setNamespace(namespace);
 		return this;
 	}
 
-	public Jdom2WriterBuilder<R> addItemWriter(Jdom2ItemWriter itemWriter) {
+	public Jdom2WriterBuilder<C> addItemWriter(Jdom2ItemWriter<C> itemWriter) {
 		this.writer.getItemWriter().add(itemWriter);
 		return this;
 	}
 
-	public Jdom2WriterBuilder<R> addStaxItemReader(ItemReader<XMLStreamReader, Void> itemReader) {
+	public Jdom2WriterBuilder<C> addStaxItemReader(ItemReader<XMLStreamReader, Void> itemReader) {
 		this.writer.getStaxItemReaders().add(itemReader);
 		return this;
 	}
 	
-	public Jdom2WriterBuilder<R> setParseContext(ParseContext parseContext) {
+	public Jdom2WriterBuilder<C> setParseContext(ParseContext parseContext) {
 		this.writer.setParseContext(parseContext);
 		return this;
 	}
 	
-	public Jdom2WriterBuilder<R> setEncoding(String encoding) {
+	public Jdom2WriterBuilder<C> setEncoding(String encoding) {
 		this.writer.setEncoding(encoding);
 		return this;
 	}

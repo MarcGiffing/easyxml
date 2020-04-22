@@ -17,6 +17,7 @@ import com.giffing.easyxml.jdom2.example.NoteContext;
 import com.giffing.easyxml.jdom2.writer.Jdom2ItemWriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Jdom2WriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Writer;
+import com.giffing.easyxml.reader.item.ItemReader;
 
 public class NoteWriterTest {
 
@@ -25,21 +26,18 @@ public class NoteWriterTest {
 		try (
 			InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"));
 			OutputStream outputStream = new FileOutputStream(new File("target/note.xml"))) {
-			Writer writer = Jdom2WriterBuilder.writer()
+			Writer writer = Jdom2WriterBuilder.<NoteContext>writer()
 				.setInputStream(inputStream)
 				.setOutputStream(outputStream)
 				.setParseContext(new NoteContext())
 				.addStaxItemReader(new GroupItemReader())
 				.addItemWriter(
-						new Jdom2ItemWriterBuilder()
-						.shouldHandle(p -> {
-							NoteContext noteContext = (NoteContext) p;
-							return p.getPath().equals("notes/group/note") && noteContext.latestGroupId == 2;
-						})
+						Jdom2ItemWriterBuilder.<NoteContext>newBuilder()
+						.shouldHandle(p -> p.getPath().equals("notes/group/note") && p.latestGroupId == 2)
 						.remove()
 						.build())
 				.addItemWriter(
-					new Jdom2ItemWriterBuilder()
+					Jdom2ItemWriterBuilder.<NoteContext>newBuilder()
 						.shouldHandle(p -> p.getPath().equals("notes/group/note"))
 						.handle((c) -> {
 							NoteContext noteContext = (NoteContext) c.getContext();
@@ -62,7 +60,8 @@ public class NoteWriterTest {
 				.setInputStream(inputStream)
 				.setOutputStream(outputStream)
 				.addItemWriter(
-					new Jdom2ItemWriterBuilder()
+					Jdom2ItemWriterBuilder
+						.newBuilder()
 						.shouldHandle(p -> p.getPath().equals("wx_station_index/station"))
 						.handle((c) -> {
 							String stationId = c.getElement().getChildTextTrim("station_id");

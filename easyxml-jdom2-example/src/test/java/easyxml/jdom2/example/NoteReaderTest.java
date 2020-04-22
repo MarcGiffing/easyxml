@@ -49,15 +49,13 @@ public class NoteReaderTest {
 					JDom2ItemReaderBuilder
 						.<Note> itemReader()
 						.shouldHandle((p) -> p.getPath().equals("notes/group/note"))
-						.handle((e) -> {
-							return parseNote(e);
-						}).build())
+						.handle((e) -> parseNote(e))
+						.build())
 				.addItemReader(
 					JDom2ItemReaderBuilder.<Note> itemReader()
 						.shouldHandle("notes/group/specialNote")
-						.handle((e) -> {
-							return parseNote(e);
-						}).build())
+						.handle((e) -> parseNote(e))
+						.build())
 				.build();
 
 			for (Note note : parser) {
