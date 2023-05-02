@@ -54,6 +54,11 @@ public class JaxbReaderBuilder<R> {
 		return this;
 	}
 
+	public JaxbReaderBuilder<R> setSourceEncoding(String encoding) {
+		this.parser.setEncoding(encoding);
+		return this;
+	}
+
 	public JaxbReaderBuilder<R> addItemReader(JaxbItemReader<JAXBElement<R>, R> itemReader) {
 		this.reader.getItemReaders().add(itemReader);
 		return this;

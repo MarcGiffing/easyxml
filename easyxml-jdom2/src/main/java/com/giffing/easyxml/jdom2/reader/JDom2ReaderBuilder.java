@@ -55,6 +55,11 @@ public class JDom2ReaderBuilder<R> {
 		return this;
 	}
 
+	public JDom2ReaderBuilder<R> setSourceEncoding(String encoding) {
+		this.parser.setEncoding(encoding);
+		return this;
+	}
+
 	public JDom2ReaderBuilder<R> addItemReader(ItemReader<Element, R> itemReader) {
 		this.reader.getItemReaders().add(itemReader);
 		return this;
