@@ -1,19 +1,11 @@
 package com.giffing.easyxml.jdom2.writer;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stax.StAXSource;
-
+import com.giffing.easyxml.context.ParseContext;
+import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
+import com.giffing.easyxml.jdom2.writer.processor.CustomStAXStreamProcessor;
+import com.giffing.easyxml.reader.item.ItemReader;
+import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
+import com.giffing.easyxml.util.ReaderToWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -22,12 +14,17 @@ import org.jdom2.output.Format;
 import org.jdom2.output.support.StAXStreamProcessor;
 import org.jdom2.transform.JDOMResult;
 
-import com.giffing.easyxml.context.ParseContext;
-import com.giffing.easyxml.jdom2.writer.context.Jdom2WriterContext;
-import com.giffing.easyxml.jdom2.writer.processor.CustomStAXStreamProcessor;
-import com.giffing.easyxml.reader.item.ItemReader;
-import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
-import com.giffing.easyxml.util.ReaderToWriter;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stax.StAXSource;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Writer {
 
@@ -47,13 +44,7 @@ public class Writer {
 	
 	private List<ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
-	public void writeAll()
-		throws XMLStreamException,
-		Exception {
-
-		// Assert.notNull(documentFileResult);
-		// Assert.notNull(outputFile);
-		// Assert.notNull(packetDirection);
+	public void writeAll() throws Exception {
 
 		XMLInputFactory xif = XMLInputFactory.newInstance();
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();

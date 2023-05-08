@@ -1,9 +1,7 @@
 package com.giffing.easyxml.jdom2.reader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +28,9 @@ public class JDom2ReaderBuilder<R> {
 
 	public static <R> JDom2ReaderBuilder<R> reader() {
 		JDom2ReaderBuilder<R> builder = new JDom2ReaderBuilder<>();
-		builder.reader = new JDom2Reader<R>(new ArrayList<>());
+		builder.reader = new JDom2Reader<>(new ArrayList<>());
 		builder.readers.add(builder.reader);
-		builder.parser = new Parser<Element, R>(builder.readers, builder.staxItemReaders, new ParseContext());
+		builder.parser = new Parser<>(builder.readers, builder.staxItemReaders, new ParseContext());
 		return builder;
 	}
 
@@ -45,8 +43,8 @@ public class JDom2ReaderBuilder<R> {
 		return this;
 	}
 
-	public JDom2ReaderBuilder<R> setSourceFile(File sourceFile) throws FileNotFoundException {
-		this.parser.setInputStream(new FileInputStream(sourceFile));
+	public JDom2ReaderBuilder<R> setSourceFile(File sourceFile) throws IOException {
+		this.parser.setInputStream(Files.newInputStream(sourceFile.toPath()));
 		return this;
 	}
 

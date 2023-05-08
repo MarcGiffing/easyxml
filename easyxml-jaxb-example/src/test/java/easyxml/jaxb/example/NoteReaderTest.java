@@ -3,6 +3,7 @@ package easyxml.jaxb.example;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import javax.xml.bind.JAXBElement;
 
@@ -17,11 +18,11 @@ import com.giffing.easyxml.jaxb.example.domain.ParseNote;
 import com.giffing.easyxml.reader.Parser;
 import org.junit.jupiter.api.Test;
 
-public class NoteReaderTest {
+class NoteReaderTest {
 
 	@Test
-	public void foo() throws Exception {
-		try (InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"))) {
+	void foo() throws Exception {
+		try (InputStream inputStream = Files.newInputStream(new File("src/main/resources/note.xml").toPath())) {
 
 			Parser<JAXBElement<ParseNote>, ParseNote> parser = JaxbReaderBuilder
 				.<ParseNote> reader(ParseNote.class.getPackage().getName())

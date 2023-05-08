@@ -12,7 +12,7 @@ public class JaxbItemReaderBuilder<R> extends ItemReaderBuilder<JAXBElement<R>, 
 	private Class<?> jaxbClass;
 
 	public JaxbItemReaderBuilder() {
-		super.handle((e) -> e.getValue());
+		super.handle(e -> e.getValue());
 	}
 
 	@Override
@@ -33,8 +33,7 @@ public class JaxbItemReaderBuilder<R> extends ItemReaderBuilder<JAXBElement<R>, 
 	}
 
 	public static <R> JaxbItemReaderBuilder<R> itemReader() {
-		JaxbItemReaderBuilder<R> builder = new JaxbItemReaderBuilder<R>();
-		return builder;
+		return new JaxbItemReaderBuilder<>();
 	}
 
 	public JaxbItemReaderBuilder<R> withJaxbClass(Class<?> jaxbClass) {

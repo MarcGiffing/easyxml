@@ -15,12 +15,9 @@ package com.giffing.easyxml.util;
  *   limitations under the License.
  */
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.*;
+
+import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 
 /**
  * <p>
@@ -45,7 +42,7 @@ public class ReaderToWriter {
 
 	public void write(XMLStreamReader xmlr) throws XMLStreamException {
 		switch (xmlr.getEventType()) {
-		case XMLEvent.START_ELEMENT:
+		case START_ELEMENT:
 			String prefix = xmlr.getPrefix();
 			String namespaceURI = xmlr.getNamespaceURI();
 			if (namespaceURI != null) {
@@ -71,27 +68,27 @@ public class ReaderToWriter {
 			}
 
 			break;
-		case XMLEvent.END_ELEMENT:
+		case XMLStreamConstants.END_ELEMENT:
 			writer.writeEndElement();
 			break;
-		case XMLEvent.SPACE:
-		case XMLEvent.CHARACTERS:
+		case XMLStreamConstants.SPACE:
+		case XMLStreamConstants.CHARACTERS:
 			writer.writeCharacters(xmlr.getTextCharacters(), xmlr.getTextStart(), xmlr.getTextLength());
 			break;
-		case XMLEvent.PROCESSING_INSTRUCTION:
+		case XMLStreamConstants.PROCESSING_INSTRUCTION:
 			writer.writeProcessingInstruction(xmlr.getPITarget(), xmlr.getPIData());
 			break;
-		case XMLEvent.CDATA:
+		case XMLStreamConstants.CDATA:
 			writer.writeCData(xmlr.getText());
 			break;
 
-		case XMLEvent.COMMENT:
+		case XMLStreamConstants.COMMENT:
 			writer.writeComment(xmlr.getText());
 			break;
-		case XMLEvent.ENTITY_REFERENCE:
+		case XMLStreamConstants.ENTITY_REFERENCE:
 			writer.writeEntityRef(xmlr.getLocalName());
 			break;
-		case XMLEvent.START_DOCUMENT:
+		case XMLStreamConstants.START_DOCUMENT:
 			String encoding = xmlr.getCharacterEncodingScheme();
 			String version = xmlr.getVersion();
 
@@ -100,13 +97,12 @@ public class ReaderToWriter {
 			else if (version != null)
 				writer.writeStartDocument(xmlr.getVersion());
 			break;
-		case XMLEvent.END_DOCUMENT:
+		case XMLStreamConstants.END_DOCUMENT:
 			writer.writeEndDocument();
 			break;
-		case XMLEvent.DTD:
+		case XMLStreamConstants.DTD:
 			writer.writeDTD(xmlr.getText());
 			break;
-
 		}
 	}
 
@@ -119,17 +115,4 @@ public class ReaderToWriter {
 		return writer;
 	}
 
-	public static void main(String args[]) throws Exception {
-		XMLInputFactory xmlif = XMLInputFactory.newInstance();
-		XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
-		XMLStreamReader xmlr = xmlif.createXMLStreamReader(new java.io.FileReader(args[0]));
-		XMLStreamWriter xmlw = xmlof.createXMLStreamWriter(System.out);
-
-		ReaderToWriter rtow = new ReaderToWriter(xmlw);
-		while (xmlr.hasNext()) {
-			rtow.write(xmlr);
-			xmlr.next();
-		}
-		xmlw.flush();
-	}
 }

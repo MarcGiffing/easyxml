@@ -28,10 +28,10 @@ public class JaxbReaderBuilder<R> {
 	}
 
 	public static <R> JaxbReaderBuilder<R> reader(String jaxbContextPath) {
-		JaxbReaderBuilder<R> builder = new JaxbReaderBuilder<R>();
-		builder.reader = new JaxbReader<R>(new ArrayList<>(), jaxbContextPath);
+		JaxbReaderBuilder<R> builder = new JaxbReaderBuilder<>();
+		builder.reader = new JaxbReader<>(new ArrayList<>(), jaxbContextPath);
 		builder.readers.add(builder.reader);
-		builder.parser = new Parser<JAXBElement<R>, R>(builder.readers, builder.staxItemReaders, new ParseContext());
+		builder.parser = new Parser<>(builder.readers, builder.staxItemReaders, new ParseContext());
 		return builder;
 	}
 

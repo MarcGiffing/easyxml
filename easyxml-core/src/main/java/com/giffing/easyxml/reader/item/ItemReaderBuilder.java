@@ -20,7 +20,7 @@ public abstract class ItemReaderBuilder<T, R> {
 	}
 
 	public ItemReaderBuilder<T, R> shouldHandle(String path) {
-		return this.shouldHandle((p) -> p.getPath().equals(path));
+		return this.shouldHandle(p -> p.getPath().equals(path));
 	}
 
 	public ItemReaderBuilder<T, R> handle(Function<T, R> function) {

@@ -10,8 +10,7 @@ public class JDom2ItemReaderBuilder<R> extends ItemReaderBuilder<Element, R> {
 	}
 
 	public static <R> JDom2ItemReaderBuilder<R> itemReader() {
-		JDom2ItemReaderBuilder<R> builder = new JDom2ItemReaderBuilder<R>();
-		return builder;
+		return new JDom2ItemReaderBuilder<>();
 	}
 
 }

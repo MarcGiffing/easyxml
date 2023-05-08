@@ -19,7 +19,6 @@ public class GroupItemReader implements ItemReader<XMLStreamReader, Void> {
 	public Void read(XMLStreamReader t) {
 		Long groupId = Long.valueOf(t.getAttributeValue(null, "id"));
 		this.context.latestGroupId = groupId;
-		System.out.println(groupId);
 		return null;
 	}
 

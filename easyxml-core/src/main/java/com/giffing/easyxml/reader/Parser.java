@@ -49,7 +49,7 @@ public class Parser<T, R> implements Iterable<R> {
 
 	public R readNext() {
 		return currentItemReader.read(currentReader.transform(
-			new TransformContext<T, R>(streamReader, currentItemReader))
+			new TransformContext<>(streamReader, currentItemReader))
 			.getContent());
 	}
 
@@ -75,7 +75,7 @@ public class Parser<T, R> implements Iterable<R> {
 					for (Reader<T, R> reader : readers) {
 						for (ItemReader<T, R> itemReader : reader.getItemReaders()) {
 							if ((itemReader).shouldHandle(context)) {
-								if (currentElementPath.size() > 0) {
+								if (!currentElementPath.isEmpty()) {
 									currentElementPath.remove(currentElementPath.size() - 1);
 								}
 								currentReader = reader;
@@ -101,7 +101,7 @@ public class Parser<T, R> implements Iterable<R> {
 	}
 
 	private void removePath() {
-		if (currentElementPath.size() > 0) {
+		if (!currentElementPath.isEmpty()) {
 			int lastElementIndex = currentElementPath.size() - 1;
 			if (currentElementPath.get(lastElementIndex).equals(streamReader.getLocalName())) {
 				currentElementPath.remove(lastElementIndex);

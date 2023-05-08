@@ -10,14 +10,15 @@ import org.junit.jupiter.api.Test;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
+import java.nio.file.Files;
 
-public class NoteWriterTest {
+class NoteWriterTest {
 
 	@Test
-	public void foo() throws XMLStreamException, Exception {
+	void foo() throws Exception {
 		try (
-			InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"));
-			OutputStream outputStream = new FileOutputStream(new File("target/note.xml"))) {
+				InputStream inputStream = Files.newInputStream(new File("src/main/resources/note.xml").toPath());
+				OutputStream outputStream = Files.newOutputStream(new File("target/note.xml").toPath())) {
 			Writer writer = Jdom2WriterBuilder.<NoteContext>writer()
 				.setInputStream(inputStream)
 				.setOutputStream(outputStream)
@@ -44,10 +45,10 @@ public class NoteWriterTest {
 	}
 	
 	@Test
-	public void weather() throws XMLStreamException, Exception {
+	public void weather() throws Exception {
 		try (
-			InputStream inputStream = new FileInputStream(new File("src/main/resources/weather.xml"));
-			OutputStream outputStream = new FileOutputStream(new File("target/weather.xml"))) {
+				InputStream inputStream = Files.newInputStream(new File("src/main/resources/weather.xml").toPath());
+				OutputStream outputStream = Files.newOutputStream(new File("target/weather.xml").toPath())) {
 			Writer writer = Jdom2WriterBuilder.writer()
 				.setInputStream(inputStream)
 				.setOutputStream(outputStream)

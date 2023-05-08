@@ -26,7 +26,7 @@ public class Jdom2ItemWriterBuilder<T extends ParseContext> {
 	}
 
 	public Jdom2ItemWriterBuilder<T> shouldHandle(T parseContext) {
-		return this.shouldHandle((p) -> p.getPath().equals(parseContext.getPath()));
+		return this.shouldHandle(p -> p.getPath().equals(parseContext.getPath()));
 	}
 	
 	public Jdom2ItemWriterBuilder<T> shouldRemove(boolean remove) {

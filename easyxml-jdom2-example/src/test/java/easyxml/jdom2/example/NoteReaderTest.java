@@ -3,6 +3,7 @@ package easyxml.jdom2.example;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -17,12 +18,12 @@ import com.giffing.easyxml.jdom2.reader.JDom2ReaderBuilder;
 import com.giffing.easyxml.reader.Parser;
 import org.junit.jupiter.api.Test;
 
-public class NoteReaderTest {
+class NoteReaderTest {
 
 	@Test
-	public void test_with_external_item_reader_class() throws Exception {
+	void test_with_external_item_reader_class() throws Exception {
 		
-		try (InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"))) {
+		try (InputStream inputStream = Files.newInputStream(new File("src/main/resources/note.xml").toPath())) {
 			Parser<Element, Note> parser = JDom2ReaderBuilder
 				.<Note> reader()
 				.parseContext(new NoteContext())
@@ -39,9 +40,9 @@ public class NoteReaderTest {
 	}
 
 	@Test
-	public void test_with_two_different_paths() throws Exception {
+	void test_with_two_different_paths() throws Exception {
 
-		try (InputStream inputStream = new FileInputStream(new File("src/main/resources/note.xml"))) {
+		try (InputStream inputStream = Files.newInputStream(new File("src/main/resources/note.xml").toPath())) {
 			Parser<Element, Note> parser = JDom2ReaderBuilder
 				.<Note> reader()
 				.setInputStream(inputStream)
@@ -49,12 +50,12 @@ public class NoteReaderTest {
 					JDom2ItemReaderBuilder
 						.<Note> itemReader()
 						.shouldHandle((p) -> p.getPath().equals("notes/group/note"))
-						.handle((e) -> parseNote(e))
+						.handle(this::parseNote)
 						.build())
 				.addItemReader(
 					JDom2ItemReaderBuilder.<Note> itemReader()
 						.shouldHandle("notes/group/specialNote")
-						.handle((e) -> parseNote(e))
+						.handle(this::parseNote)
 						.build())
 				.build();
 
