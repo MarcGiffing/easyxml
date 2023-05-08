@@ -8,7 +8,6 @@ import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.junit.Test;
 
 import com.giffing.easyxml.jaxb.JaxbItemReaderBuilder;
 import com.giffing.easyxml.jaxb.JaxbReaderBuilder;
@@ -16,6 +15,7 @@ import com.giffing.easyxml.jaxb.example.domain.JaxbNote;
 import com.giffing.easyxml.jaxb.example.domain.JaxbSpecialNote;
 import com.giffing.easyxml.jaxb.example.domain.ParseNote;
 import com.giffing.easyxml.reader.Parser;
+import org.junit.jupiter.api.Test;
 
 public class NoteReaderTest {
 

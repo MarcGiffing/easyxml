@@ -7,7 +7,6 @@ import java.io.InputStream;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jdom2.Element;
-import org.junit.Test;
 
 import com.giffing.easyxml.jdom2.example.GroupItemReader;
 import com.giffing.easyxml.jdom2.example.NoteContext;
@@ -16,6 +15,7 @@ import com.giffing.easyxml.jdom2.example.domain.Note;
 import com.giffing.easyxml.jdom2.reader.JDom2ItemReaderBuilder;
 import com.giffing.easyxml.jdom2.reader.JDom2ReaderBuilder;
 import com.giffing.easyxml.reader.Parser;
+import org.junit.jupiter.api.Test;
 
 public class NoteReaderTest {
 

@@ -1,23 +1,15 @@
 package easyxml.jdom2.example;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.jdom2.Element;
-import org.jdom2.Namespace;
-import org.junit.Test;
-
 import com.giffing.easyxml.jdom2.example.GroupItemReader;
 import com.giffing.easyxml.jdom2.example.NoteContext;
 import com.giffing.easyxml.jdom2.writer.Jdom2ItemWriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Jdom2WriterBuilder;
 import com.giffing.easyxml.jdom2.writer.Writer;
-import com.giffing.easyxml.reader.item.ItemReader;
+import org.jdom2.Element;
+import org.junit.jupiter.api.Test;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.*;
 
 public class NoteWriterTest {
 
