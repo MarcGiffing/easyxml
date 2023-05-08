@@ -21,6 +21,7 @@ import com.giffing.easyxml.stax.reader.context.StaxTransformerResult;
 public class Parser<T, R> implements Iterable<R> {
 
 	private XMLInputFactory xif = XMLInputFactory.newInstance();
+	private String encoding = null;
 	private XMLStreamReader streamReader = null;
 	private InputStream inputStream = null;
 
@@ -33,7 +34,7 @@ public class Parser<T, R> implements Iterable<R> {
 	private Reader<T, R> currentReader;
 
 	private ItemReader<T, R> currentItemReader = null;
-	
+
 	private List<? extends ItemReader<XMLStreamReader, Void>> staxItemReaders = new ArrayList<>();
 
 	public Parser(List<? extends Reader<T, R>> readers, List<? extends ItemReader<XMLStreamReader, Void>> staxItemReaders, ParseContext context) {
@@ -64,13 +65,13 @@ public class Parser<T, R> implements Iterable<R> {
 				if (streamReader.isStartElement()) {
 					addPath();
 					context.setPath(StringUtils.join(currentElementPath, "/"));
-					
+
 					for (ItemReader<XMLStreamReader, Void> staxItemReader : staxItemReaders) {
 						if(staxItemReader.shouldHandle(context)) {
 							staxItemReader.read(new StaxTransformerResult(streamReader).getContent());
 						}
 					}
-					
+
 					for (Reader<T, R> reader : readers) {
 						for (ItemReader<T, R> itemReader : reader.getItemReaders()) {
 							if ((itemReader).shouldHandle(context)) {
@@ -126,7 +127,7 @@ public class Parser<T, R> implements Iterable<R> {
 
 	private void doOpen() {
 		try {
-			streamReader = xif.createXMLStreamReader(inputStream, "UTF-8");
+			streamReader = xif.createXMLStreamReader(inputStream, encoding);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,6 +139,14 @@ public class Parser<T, R> implements Iterable<R> {
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 	@Override
@@ -155,5 +164,4 @@ public class Parser<T, R> implements Iterable<R> {
 			}
 		};
 	}
-
 }
